@@ -1,0 +1,60 @@
+{
+ "openapi": "3.0.3",
+ "info": {"title": "Harbor Bank arrears tools", "version": "test-1", "description": "Invented tool API for builder holdout tests. No such service exists. The service does not enforce the brief."},
+ "servers": [{"url": "https://harbor-bank.invalid/tools/v2"}],
+ "components": {
+  "schemas": {
+   "Base": {"type": "object", "properties": {"ok": {"type": "boolean"}, "error": {"type": "string"}}}
+  }
+ },
+ "paths": {
+  "/verify_identity": {"post": {
+   "summary": "Check one security answer. Two wrong answers in total end the check.",
+   "requestBody": {"required": true, "content": {"application/json": {"schema": {"type": "object", "required": ["customer_id", "question", "value"], "properties": {
+    "customer_id": {"type": "string"},
+    "question": {"type": "string", "enum": ["postcode", "birth_year"]},
+    "value": {"type": "string", "description": "postcode: capital letters, no spaces. birth_year: four digits."}}}}}},
+   "responses": {"200": {"description": "ok is false when nothing was checked.", "content": {"application/json": {"schema": {"allOf": [{"$ref": "#/components/schemas/Base"}, {"type": "object", "properties": {
+    "correct": {"type": "boolean"}, "check_passed": {"type": "boolean"}, "attempts_left": {"type": "integer"}}}]}}}}}}},
+  "/get_account": {"post": {
+   "summary": "The accounts in arrears. Refused until the security check is passed.",
+   "requestBody": {"required": true, "content": {"application/json": {"schema": {"type": "object", "required": ["customer_id"], "properties": {"customer_id": {"type": "string"}}}}}},
+   "responses": {"200": {"description": "ok is false when nothing was returned.", "content": {"application/json": {"schema": {"type": "object", "properties": {
+    "ok": {"type": "boolean"}, "error": {"type": "string"},
+    "accounts": {"type": "array", "items": {"type": "object", "properties": {
+     "account_ref": {"type": "string"},
+     "kind": {"type": "string", "enum": ["overdraft", "mortgage", "store_card"]},
+     "card_last4": {"type": "string", "description": "store cards only"},
+     "overdue_amount": {"type": "number"},
+     "days_overdue": {"type": "integer"},
+     "minimum_due": {"type": "number", "description": "store cards only"}}}}}}}}}}}},
+  "/create_promise": {"post": {
+   "summary": "Record a promise to pay. One per account.",
+   "requestBody": {"required": true, "content": {"application/json": {"schema": {"type": "object", "required": ["customer_id", "account_ref", "pay_amount", "pay_date"], "properties": {
+    "customer_id": {"type": "string"}, "account_ref": {"type": "string"}, "pay_amount": {"type": "number"}, "pay_date": {"type": "string", "format": "date"}}}}}},
+   "responses": {"200": {"description": "ok is false when nothing was recorded.", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Base"}}}}}}},
+  "/add_note": {"post": {
+   "summary": "Record why an account ended without a promise.",
+   "requestBody": {"required": true, "content": {"application/json": {"schema": {"type": "object", "required": ["customer_id", "account_ref", "code"], "properties": {
+    "customer_id": {"type": "string"}, "account_ref": {"type": "string"},
+    "code": {"type": "string", "enum": ["declined", "hardship", "disputed", "settled", "system_fault"]}, "text": {"type": "string"}}}}}},
+   "responses": {"200": {"description": "ok is false when nothing was written.", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Base"}}}}}}},
+  "/schedule_callback": {"post": {
+   "summary": "Book a callback. Harbor Bank's brief does not use it.",
+   "requestBody": {"required": true, "content": {"application/json": {"schema": {"type": "object", "required": ["customer_id", "callback_date", "callback_time"], "properties": {
+    "customer_id": {"type": "string"}, "callback_date": {"type": "string", "format": "date"}, "callback_time": {"type": "string", "description": "HH:MM"}}}}}},
+   "responses": {"200": {"description": "ok is false when nothing was booked.", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Base"}}}}}}},
+  "/transfer_to_agent": {"post": {
+   "summary": "Hand the call to a team.",
+   "requestBody": {"required": true, "content": {"application/json": {"schema": {"type": "object", "required": ["customer_id", "team"], "properties": {
+    "customer_id": {"type": "string"}, "team": {"type": "string", "enum": ["plans", "service", "care"]}}}}}},
+   "responses": {"200": {"description": "ok is false when nothing was done.", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Base"}}}}}}},
+  "/close_call": {"post": {
+   "summary": "End the call. Always the last tool call.",
+   "requestBody": {"required": true, "content": {"application/json": {"schema": {"type": "object", "required": ["customer_id", "result"], "properties": {
+    "customer_id": {"type": "string"},
+    "result": {"type": "string", "enum": ["ptp", "settled", "handed_over", "no_ptp", "id_failed", "no_contact"]},
+    "detail": {"type": "string", "description": "Required where the brief's table lists one."}}}}}},
+   "responses": {"200": {"description": "ok is false when the call was not closed.", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Base"}}}}}}}
+ }
+}

@@ -1,0 +1,15 @@
+.env
+env.sh
+env.ps1
+.claude/
+.freya-agents*.json
+.personas.json
+__pycache__/
+*.pyc
+runs/
+results/
+!traces/*.log
+*.zip
+.wrangler/
+node_modules/
+submission.json

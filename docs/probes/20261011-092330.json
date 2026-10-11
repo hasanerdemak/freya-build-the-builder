@@ -1,0 +1,232 @@
+{
+ "at": "2026-10-11T09:23:00Z",
+ "turns": [
+  {
+   "user": "DOB BLOCK-RAISE",
+   "agent": "Probe ready."
+  },
+  {
+   "user": "DOB BLOCK-URL",
+   "agent": "Probe ready."
+  },
+  {
+   "user": "DOB BLOCK-REDIRECT",
+   "agent": "Probe ready."
+  },
+  {
+   "user": "DOB 1988-03-14",
+   "agent": "Probe ready."
+  },
+  {
+   "user": "PHONE 4471",
+   "agent": "done"
+  },
+  {
+   "user": "ok",
+   "agent": "done"
+  }
+ ],
+ "workflow": {
+  "workflow_id": "9edcee98-60dc-4c2c-bbb6-d1cad6be0a76",
+  "agent_id": "3647c2da-71bc-43b9-9702-669a1699f6d8",
+  "version": 2,
+  "created": false
+ },
+ "readback": {
+  "hooks_kept": true,
+  "mapping_kept": [
+   {
+    "path": "data.probe_identity",
+    "variable": "probe_identity",
+    "description": ""
+   }
+  ],
+  "account_pre_actions": 1,
+  "account_mapping": [
+   {
+    "path": "data.products",
+    "variable": "probe_products",
+    "description": ""
+   }
+  ]
+ },
+ "chats": [
+  {
+   "script": [
+    "DOB BLOCK-RAISE"
+   ],
+   "events": [
+    {
+     "role": "user",
+     "text": "DOB BLOCK-RAISE",
+     "node": "setup"
+    },
+    {
+     "role": "assistant",
+     "text": "Probe ready.",
+     "node": "talk"
+    },
+    {
+     "event": "route_evaluated",
+     "matched": true,
+     "target": "talk",
+     "probe_vars": "{\"account.current_turns\": 0, \"account.total_turns\": 0}"
+    },
+    {
+     "event": "node_enter",
+     "node": "talk",
+     "detail": "{\"event\": \"node_enter\", \"node\": \"talk\", \"from_node\": \"setup\", \"reason\": \"always always\"}"
+    }
+   ]
+  },
+  {
+   "script": [
+    "DOB BLOCK-URL"
+   ],
+   "events": [
+    {
+     "role": "user",
+     "text": "DOB BLOCK-URL",
+     "node": "setup"
+    },
+    {
+     "role": "assistant",
+     "text": "Probe ready.",
+     "node": "talk"
+    },
+    {
+     "event": "route_evaluated",
+     "matched": true,
+     "target": "talk",
+     "probe_vars": "{\"account.current_turns\": 0, \"account.total_turns\": 0}"
+    },
+    {
+     "event": "node_enter",
+     "node": "talk",
+     "detail": "{\"event\": \"node_enter\", \"node\": \"talk\", \"from_node\": \"setup\", \"reason\": \"always always\"}"
+    }
+   ]
+  },
+  {
+   "script": [
+    "DOB BLOCK-REDIRECT"
+   ],
+   "events": [
+    {
+     "role": "user",
+     "text": "DOB BLOCK-REDIRECT",
+     "node": "setup"
+    },
+    {
+     "role": "assistant",
+     "text": "Probe ready.",
+     "node": "talk"
+    },
+    {
+     "event": "route_evaluated",
+     "matched": true,
+     "target": "talk",
+     "probe_vars": "{\"account.current_turns\": 0, \"account.total_turns\": 0}"
+    },
+    {
+     "event": "node_enter",
+     "node": "talk",
+     "detail": "{\"event\": \"node_enter\", \"node\": \"talk\", \"from_node\": \"setup\", \"reason\": \"always always\"}"
+    }
+   ]
+  },
+  {
+   "script": [
+    "DOB 1988-03-14",
+    "PHONE 4471",
+    "ok"
+   ],
+   "events": [
+    {
+     "role": "user",
+     "text": "DOB 1988-03-14",
+     "node": "setup"
+    },
+    {
+     "role": "assistant",
+     "text": "Probe ready.",
+     "node": "talk"
+    },
+    {
+     "event": "route_evaluated",
+     "matched": true,
+     "target": "talk",
+     "probe_vars": "{\"account.current_turns\": 0, \"account.total_turns\": 0}"
+    },
+    {
+     "event": "node_enter",
+     "node": "talk",
+     "detail": "{\"event\": \"node_enter\", \"node\": \"talk\", \"from_node\": \"setup\", \"reason\": \"always always\"}"
+    },
+    {
+     "role": "user",
+     "text": "PHONE 4471",
+     "node": "talk"
+    },
+    {
+     "event": "route_evaluated",
+     "matched": false,
+     "target": null,
+     "probe_vars": "{\"account.current_turns\": 0, \"account.total_turns\": 0}"
+    },
+    {
+     "event": "function_call_start",
+     "node": "talk",
+     "detail": "{\"event\": \"function_call_start\", \"function\": \"verify_identity\", \"args\": {\"url\": \"https://freya-bank-mock.freyavoice.workers.dev/v1/verify_identity\", \"method\": \"POST\", \"headers\": {\"Content-Type\": \"application/json\"}, \"body\": {\"field\": \"phone_last4\", \"answer\": \" 4471\", \"customer_id\": \"c_b5d91429-5a5\"}}}"
+    },
+    {
+     "event": "function_call_complete",
+     "node": "talk",
+     "detail": "{\"event\": \"function_call_complete\", \"function\": \"verify_identity\", \"result\": {\"status\": \"success\", \"data\": {\"ok\": true, \"verified\": true, \"wrong_answers_left\": 3, \"all_verified\": false, \"probe\": \"{\\\"post_ran\\\": true, \\\"vars_type\\\": \\\"<class 'dict'>\\\", \\\"pre_seen\\\": \\\"4471\\\", \\\"scope\\\": \\\"functions_ok_2 isinstance=ok sorted=ok any=ok all=ok set=ok fromisoformat=ok re=ok json=ok enumerate=ok fmt=ok float=ok\\\", \\\"arg_keys\\\": [], \\\"args_obj\\\": \\\"None\\\", \\\"setup\\\": \\\"None\\\", \\\"now\\\": \\\"2026-10-14T11:00\\\", \\\"result_keys\\\": [\\\"data\\\", \\\"header\\\", \\\"message\\\", \\\"status\\\", \\\"status_code\\\"], \\\"status\\\": \\\"success\\\"}\", \"what_to_do_next\": \"Reply with the single word done. When the next DOB or PHONE message comes, CALL verify_identity again.\"}, \"message\": \"Successfully executed POST request\", \"status_code\": 200}}"
+    },
+    {
+     "event": "route_evaluated",
+     "matched": false,
+     "target": null,
+     "probe_vars": "{\"account.current_turns\": 0, \"account.total_turns\": 0, \"probe_scope\": \"functions_ok_2 isinstance=ok sorted=ok any=ok all=ok set=ok fromisoformat=ok re=ok json=ok enumerate=ok fmt=ok float=ok\", \"probe_pre_seen\": \"4471\", \"verify_identity_args.answer\": \" 4471\", \"verify_identity_args.field\": \"phone_last4\", \"verify_identity_response.data.probe\": \"{\\\"post_ran\\\": true, \\\"vars_type\\\": \\\"<class 'dict'>\\\", \\\"pre_seen\\\": \\\"4471\\\", \\\"scope\\\": \\\"functions_ok_2 isinstance=ok sorted=ok any=ok all=ok set=ok fromisoformat=ok re=ok json=ok enumerate=ok fmt=ok float=ok\\\", \\\"arg_keys\\\": [], \\\"args_obj\\\": \\\"None\\\", \\\"setup\\\": \\\"None\\\", \\\"now\\\": \\\"2026-10-14T11:00\\\", \\\"result_keys\\\": [\\\"data\\\", \\\"header\\\", \\\"message\\\", \\\"status\\\", \\\"status_code\\\"], \\\"status\\\": \\\"success\\\"}\"}"
+    },
+    {
+     "role": "assistant",
+     "text": "done",
+     "node": "talk"
+    },
+    {
+     "role": "user",
+     "text": "ok",
+     "node": "talk"
+    },
+    {
+     "event": "route_evaluated",
+     "matched": false,
+     "target": null,
+     "probe_vars": "{\"account.current_turns\": 0, \"account.total_turns\": 0, \"probe_scope\": \"functions_ok_2 isinstance=ok sorted=ok any=ok all=ok set=ok fromisoformat=ok re=ok json=ok enumerate=ok fmt=ok float=ok\", \"probe_pre_seen\": \"4471\", \"verify_identity_args.answer\": \" 4471\", \"verify_identity_args.field\": \"phone_last4\", \"verify_identity_response.data.probe\": \"{\\\"post_ran\\\": true, \\\"vars_type\\\": \\\"<class 'dict'>\\\", \\\"pre_seen\\\": \\\"4471\\\", \\\"scope\\\": \\\"functions_ok_2 isinstance=ok sorted=ok any=ok all=ok set=ok fromisoformat=ok re=ok json=ok enumerate=ok fmt=ok float=ok\\\", \\\"arg_keys\\\": [], \\\"args_obj\\\": \\\"None\\\", \\\"setup\\\": \\\"None\\\", \\\"now\\\": \\\"2026-10-14T11:00\\\", \\\"result_keys\\\": [\\\"data\\\", \\\"header\\\", \\\"message\\\", \\\"status\\\", \\\"status_code\\\"], \\\"status\\\": \\\"success\\\"}\"}"
+    },
+    {
+     "role": "assistant",
+     "text": "done",
+     "node": "talk"
+    }
+   ]
+  }
+ ],
+ "ledger_calls": [
+  {
+   "tool": "verify_identity",
+   "args": {
+    "field": "phone_last4",
+    "answer": " 4471"
+   },
+   "result": {
+    "ok": true,
+    "verified": true,
+    "wrong_answers_left": 3,
+    "all_verified": false
+   }
+  }
+ ]
+}

@@ -1,0 +1,125 @@
+{
+ "meta": {"bank_name": "Freya Bank", "brief_kind": "clean", "summary": "Hand-written IR for the public briefs A and B. Test fixture only: it is never given to the model and never used in a build."},
+ "call_variables": {
+  "customer_id": "customer_id",
+  "now": "now",
+  "others": [
+   {"name": "first_name", "meaning": "First name of the person to ask for", "example": "Daniel"},
+   {"name": "last_name", "meaning": "Last name of the person to ask for", "example": "Reyes"},
+   {"name": "title", "meaning": "Mr or Ms", "example": "Mr"},
+   {"name": "now", "meaning": "Current date and time of the call", "example": "2026-10-14T11:00"}
+  ]
+ },
+ "opening": {
+  "first_line": "Hello, this is the digital assistant of Freya Bank, and this call is recorded. Am I speaking with {{title}} {{last_name}}?",
+  "forbidden_before_verification": ["collections", "debt", "payment"]
+ },
+ "identity": {
+  "ordered": true,
+  "max_wrong_answers": 3,
+  "questions": [
+   {"field": "date_of_birth", "ask": "What is your date of birth?", "format": "date", "length": 0, "normalize": [], "numeric_date_order": "dmy", "wire_format": "YYYY-MM-DD"},
+   {"field": "phone_last4", "ask": "What are the last four digits of the phone number we have on file for you?", "format": "digits", "length": 4, "normalize": [], "numeric_date_order": "", "wire_format": ""}
+  ],
+  "hints": [
+   {"value": "day_month_swapped", "instruction": "Ask the customer to say the month as a word, then check the answer again.", "counts_as_wrong": false}
+  ]
+ },
+ "calendar": {
+  "weekend_days": ["saturday", "sunday"],
+  "holidays": ["2026-10-26", "2026-11-11", "2026-11-26", "2026-12-25", "2027-01-01"],
+  "week_start": "monday",
+  "this_weekday": "current_week",
+  "next_weekday": "following_week"
+ },
+ "account": {
+  "product_types": [
+   {"type": "credit_card", "label": "credit card ending {card_last4}", "floor": {"kind": "field", "field": "minimum_payment"}, "floor_label": "the minimum payment"},
+   {"type": "personal_loan", "label": "personal loan", "floor": {"kind": "field", "field": "instalment_amount"}, "floor_label": "the instalment amount"},
+   {"type": "car_loan", "label": "car loan", "floor": {"kind": "field", "field": "instalment_amount"}, "floor_label": "the instalment amount"}
+  ]
+ },
+ "bands": [
+  {"name": "early", "field": "days_late", "min": 1, "max": 7, "deadline": {"kind": "business_days_after_today", "n": 12}, "persuasion_attempts": 1},
+  {"name": "late", "field": "days_late", "min": 8, "max": 45, "deadline": {"kind": "business_days_after_today", "n": 7}, "persuasion_attempts": 2}
+ ],
+ "persuasion": [
+  {"attempt": 1, "bands": [], "amount": "full_or_floor_if_declined", "date": {"kind": "last_business_day_of_week", "week_offset": 0, "roll_if_today": true}},
+  {"attempt": 2, "bands": ["late"], "amount": "floor", "date": {"kind": "deadline"}}
+ ],
+ "promise": {
+  "min_amount": "floor",
+  "max_amount": "full",
+  "business_day_required": true,
+  "not_after_deadline": true,
+  "not_before_today": true,
+  "one_per_product": true,
+  "max_tool_attempts": 2,
+  "wire_format": "YYYY-MM-DD",
+  "success_sentence": "You will receive a text message confirming this promise.",
+  "confirmation": "batch"
+ },
+ "callback": {
+  "used": true,
+  "allowed_days": [{"kind": "today"}, {"kind": "business_days_after_today", "n": 1}],
+  "earliest_time": "10:00",
+  "latest_time": "19:00",
+  "after_now": true,
+  "wire_format": "YYYY-MM-DD"
+ },
+ "transfer": {
+  "queues": [
+   {"queue": "restructuring", "close_outcome": "transferred", "close_reason": "restructuring"},
+   {"queue": "general", "close_outcome": "transferred", "close_reason": "human"},
+   {"queue": "support", "close_outcome": "transferred", "close_reason": "support"}
+  ],
+  "notes_on_transfer": "forbidden"
+ },
+ "notes": {
+  "used": true,
+  "per_product_without_promise": true,
+  "reasons": ["refused", "hardship", "dispute", "paid", "service_error"],
+  "timing": "end_of_call"
+ },
+ "closing": {
+  "table": [
+   {"outcome": "promise", "reason": ""},
+   {"outcome": "paid", "reason": ""},
+   {"outcome": "transferred", "reason": "restructuring"},
+   {"outcome": "transferred", "reason": "human"},
+   {"outcome": "transferred", "reason": "support"},
+   {"outcome": "no_promise", "reason": "refused"},
+   {"outcome": "no_promise", "reason": "hardship"},
+   {"outcome": "no_promise", "reason": "dispute"},
+   {"outcome": "no_promise", "reason": "service_error"},
+   {"outcome": "not_verified", "reason": "failed"},
+   {"outcome": "not_verified", "reason": "declined"},
+   {"outcome": "not_reached", "reason": "callback"},
+   {"outcome": "not_reached", "reason": "no_callback"},
+   {"outcome": "not_reached", "reason": "wrong_number"},
+   {"outcome": "not_reached", "reason": "deceased"},
+   {"outcome": "not_reached", "reason": "unclear"}
+  ],
+  "precedence": [
+   {"when": "transfer_done", "value": "", "outcome": "transferred", "reason": "", "reason_source": "transfer_queue"},
+   {"when": "promise_recorded", "value": "", "outcome": "promise", "reason": "", "reason_source": ""},
+   {"when": "callback_scheduled", "value": "", "outcome": "not_reached", "reason": "callback", "reason_source": ""},
+   {"when": "identity_failed", "value": "", "outcome": "not_verified", "reason": "failed", "reason_source": ""},
+   {"when": "all_products_noted_with", "value": "paid", "outcome": "paid", "reason": "", "reason_source": ""},
+   {"when": "any_note", "value": "paid", "outcome": "no_promise", "reason": "", "reason_source": "first_note_not"},
+   {"when": "promise_failed", "value": "", "outcome": "no_promise", "reason": "service_error", "reason_source": ""}
+  ]
+ },
+ "tools": {
+  "verify_identity": {"roles": {"customer": "customer_id", "field": "field", "answer": "answer"}, "response": {"verified": "verified", "all_verified": "all_verified", "wrong_left": "wrong_answers_left", "hint": "hint"}, "success": {"field": "ok", "equals": "true"}, "extra_fields": []},
+  "get_account": {"roles": {"customer": "customer_id"}, "response": {"products": "products", "id": "product_id", "type": "type", "due": "past_due", "late": "days_late"}, "success": {"field": "ok", "equals": "true"}, "extra_fields": []},
+  "create_promise": {"roles": {"customer": "customer_id", "product": "product_id", "amount": "amount", "date": "date"}, "response": {}, "success": {"field": "ok", "equals": "true"}, "extra_fields": []},
+  "add_note": {"roles": {"customer": "customer_id", "product": "product_id", "reason": "reason", "text": "text"}, "response": {}, "success": {"field": "ok", "equals": "true"}, "extra_fields": []},
+  "schedule_callback": {"roles": {"customer": "customer_id", "date": "date", "time": "time"}, "response": {}, "success": {"field": "ok", "equals": "true"}, "extra_fields": []},
+  "transfer_to_agent": {"roles": {"customer": "customer_id", "queue": "queue"}, "response": {}, "success": {"field": "ok", "equals": "true"}, "extra_fields": []},
+  "close_call": {"roles": {"customer": "customer_id", "outcome": "outcome", "reason": "reason"}, "response": {}, "success": {"field": "ok", "equals": "true"}, "extra_fields": []}
+ },
+ "rules": [],
+ "unmodeled_rules": [],
+ "open_questions": []
+}

@@ -1,0 +1,56 @@
+{
+ "openapi": "3.0.3",
+ "info": {"title": "Northgate Savings business collections tools", "version": "test-1", "description": "Invented tool API for builder holdout tests. No such service exists. The service does not enforce the bank's policy."},
+ "servers": [{"url": "https://northgate-savings.invalid/api"}],
+ "paths": {
+  "/verify_identity": {"post": {
+   "summary": "Check one answer. Three wrong answers in total end the checks.",
+   "requestBody": {"required": true, "content": {"application/json": {"schema": {"type": "object", "required": ["customer_id", "check", "answer"], "properties": {
+    "customer_id": {"type": "string"},
+    "check": {"type": "string", "enum": ["company_number", "founded_year"]},
+    "answer": {"type": "string", "description": "company_number: 8 digits. founded_year: 4 digits."}}}}}},
+   "responses": {"200": {"description": "status is ok when the answer was checked.", "content": {"application/json": {"schema": {"type": "object", "properties": {
+    "status": {"type": "string", "enum": ["ok", "error"]}, "message": {"type": "string"},
+    "match": {"type": "boolean"}, "all_passed": {"type": "boolean"}, "wrong_remaining": {"type": "integer"}}}}}}}}},
+  "/get_account": {"post": {
+   "summary": "Past-due products of the company. Refused until the checks are passed.",
+   "requestBody": {"required": true, "content": {"application/json": {"schema": {"type": "object", "required": ["customer_id"], "properties": {"customer_id": {"type": "string"}}}}}},
+   "responses": {"200": {"description": "status is ok when products were returned.", "content": {"application/json": {"schema": {"type": "object", "properties": {
+    "status": {"type": "string", "enum": ["ok", "error"]}, "message": {"type": "string"},
+    "products": {"type": "array", "items": {"type": "object", "properties": {
+     "product_id": {"type": "string"},
+     "product_type": {"type": "string", "enum": ["business_loan", "business_card"]},
+     "card_last4": {"type": "string", "description": "business cards only"},
+     "amount_past_due": {"type": "number"},
+     "days_past_due": {"type": "integer"},
+     "min_instalment": {"type": "number"}}}}}}}}}}}},
+  "/create_promise": {"post": {
+   "summary": "Record a promise. One per product.",
+   "requestBody": {"required": true, "content": {"application/json": {"schema": {"type": "object", "required": ["customer_id", "product_id", "amount", "due_on"], "properties": {
+    "customer_id": {"type": "string"}, "product_id": {"type": "string"}, "amount": {"type": "number"}, "due_on": {"type": "string", "format": "date"}}}}}},
+   "responses": {"200": {"description": "status is ok when the promise was recorded.", "content": {"application/json": {"schema": {"type": "object", "properties": {
+    "status": {"type": "string", "enum": ["ok", "error"]}, "message": {"type": "string"}, "promise_ref": {"type": "string"}}}}}}}}},
+  "/add_note": {"post": {
+   "summary": "Attach a note to a product. Not used on the business line.",
+   "requestBody": {"required": true, "content": {"application/json": {"schema": {"type": "object", "required": ["customer_id", "product_id", "category"], "properties": {
+    "customer_id": {"type": "string"}, "product_id": {"type": "string"}, "category": {"type": "string", "enum": ["declined", "claims_paid", "contested", "record_failed"]}, "text": {"type": "string"}}}}}},
+   "responses": {"200": {"description": "status is ok when the note was written.", "content": {"application/json": {"schema": {"type": "object", "properties": {"status": {"type": "string", "enum": ["ok", "error"]}, "message": {"type": "string"}}}}}}}}},
+  "/schedule_callback": {"post": {
+   "summary": "Book a callback.",
+   "requestBody": {"required": true, "content": {"application/json": {"schema": {"type": "object", "required": ["customer_id", "day", "time"], "properties": {
+    "customer_id": {"type": "string"}, "day": {"type": "string", "format": "date"}, "time": {"type": "string", "description": "HH:MM, 24 hour"}}}}}},
+   "responses": {"200": {"description": "status is ok when the callback was booked.", "content": {"application/json": {"schema": {"type": "object", "properties": {"status": {"type": "string", "enum": ["ok", "error"]}, "message": {"type": "string"}}}}}}}}},
+  "/transfer_to_agent": {"post": {
+   "summary": "Hand the call to a team.",
+   "requestBody": {"required": true, "content": {"application/json": {"schema": {"type": "object", "required": ["customer_id", "team"], "properties": {
+    "customer_id": {"type": "string"}, "team": {"type": "string", "enum": ["restructure", "desk"]}}}}}},
+   "responses": {"200": {"description": "status is ok when the handover was registered.", "content": {"application/json": {"schema": {"type": "object", "properties": {"status": {"type": "string", "enum": ["ok", "error"]}, "message": {"type": "string"}}}}}}}}},
+  "/close_call": {"post": {
+   "summary": "Close the call. Always last.",
+   "requestBody": {"required": true, "content": {"application/json": {"schema": {"type": "object", "required": ["customer_id", "outcome"], "properties": {
+    "customer_id": {"type": "string"},
+    "outcome": {"type": "string", "enum": ["promise_taken", "handed_off", "no_commitment", "unverified", "unreached"]},
+    "reason": {"type": "string", "enum": ["restructure", "desk", "declined", "claims_paid", "contested", "record_failed", "checks_failed", "checks_refused", "callback_booked", "no_slot", "not_our_customer", "no_answer"]}}}}}},
+   "responses": {"200": {"description": "status is ok when the call was closed.", "content": {"application/json": {"schema": {"type": "object", "properties": {"status": {"type": "string", "enum": ["ok", "error"]}, "message": {"type": "string"}}}}}}}}}
+ }
+}

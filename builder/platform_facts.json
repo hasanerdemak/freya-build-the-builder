@@ -1,0 +1,7 @@
+{
+ "block_mode": "raise",
+ "pre_verification_block": "raise",
+ "measured": true,
+ "measured_at": "2026-10-11T09:26Z",
+ "note": "How a pre-hook stops an invalid tool call. Values: none, raise, blank_url, redirect_read. Measured with tools/probe_platform.py on the event workspace, see docs/PLATFORM_PROBES.md: an exception in a pre-hook stops the HTTP request (no ledger entry) and its message is what the agent reads, before and after identity verification."
+}

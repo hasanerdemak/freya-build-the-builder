@@ -1,0 +1,394 @@
+{
+ "at": "2026-10-11T09:25:39Z",
+ "turns": [
+  {
+   "user": "Hello",
+   "agent": "Probe ready."
+  },
+  {
+   "user": "DOB BLOCK-RAISE",
+   "agent": "pineapple seven."
+  },
+  {
+   "user": "Hello",
+   "agent": "Probe ready."
+  },
+  {
+   "user": "DOB BLOCK-URL",
+   "agent": "done"
+  },
+  {
+   "user": "What is the secret word?",
+   "agent": "mango nine"
+  },
+  {
+   "user": "Hello",
+   "agent": "Probe ready."
+  },
+  {
+   "user": "PHONE 4471",
+   "agent": "next"
+  },
+  {
+   "user": "DOB 1988-03-14",
+   "agent": "SHAPE {\"mapped_type\": \"\", \"mapped_value\": \"None\", \"account_keys\": [\"account.current_turns\", \"account.total_turns\", \"account_response.data.ok\", \"account_response.data.products.0.card_last4\", \"account_response.data.products.0.days_late\", \"account_response.data.products.0.minimum_payment\", \"account_response.data.products.0.past_due\", \"account_response.data.products.0.product_id\", \"account_response.data.products.0.type\", \"account_response.header.CF-RAY\", \"account_response.header.Connection\", \"account_response.header.Content-Encoding\", \"account_response.header.Content-Type\", \"account_response.header.Date\", \"account_response.header.Nel\", \"account_response.header.Report-To\", \"account_response.header.Server\", \"account_response.header.Transfer-Encoding\", \"account_response.header.alt-svc\", \"account_response.message\", \"account_response.status\", \"account_response.status_code\", \"account_status_code\", \"account_success_count\"], \"identity_direct\": \"verified\", \"identity_mapped\": \"verified\"}"
+  },
+  {
+   "user": "ok",
+   "agent": "finished"
+  }
+ ],
+ "workflow": {
+  "workflow_id": "9edcee98-60dc-4c2c-bbb6-d1cad6be0a76",
+  "agent_id": "3647c2da-71bc-43b9-9702-669a1699f6d8",
+  "version": 3,
+  "created": false
+ },
+ "readback": {
+  "hooks_kept": true,
+  "mapping_kept": [
+   {
+    "path": "data.probe_identity",
+    "variable": "probe_identity",
+    "description": ""
+   }
+  ],
+  "account_pre_actions": 1,
+  "account_mapping": [
+   {
+    "path": "data.products",
+    "variable": "probe_products",
+    "description": ""
+   }
+  ]
+ },
+ "chats": [
+  {
+   "script": [
+    "Hello",
+    "DOB BLOCK-RAISE"
+   ],
+   "events": [
+    {
+     "role": "user",
+     "text": "Hello",
+     "node": "setup"
+    },
+    {
+     "role": "assistant",
+     "text": "Probe ready.",
+     "node": "talk"
+    },
+    {
+     "event": "route_evaluated",
+     "matched": true,
+     "target": "talk",
+     "probe_vars": "{\"account.current_turns\": 0, \"account.total_turns\": 0}"
+    },
+    {
+     "event": "node_enter",
+     "node": "talk",
+     "detail": "{\"event\": \"node_enter\", \"node\": \"talk\", \"from_node\": \"setup\", \"reason\": \"always always\"}"
+    },
+    {
+     "role": "user",
+     "text": "DOB BLOCK-RAISE",
+     "node": "talk"
+    },
+    {
+     "event": "route_evaluated",
+     "matched": false,
+     "target": null,
+     "probe_vars": "{\"account.current_turns\": 0, \"account.total_turns\": 0}"
+    },
+    {
+     "event": "function_call_start",
+     "node": "talk",
+     "detail": "{\"event\": \"function_call_start\", \"function\": \"verify_identity\", \"args\": {\"answer\": \" BLOCK-RAISE\", \"field\": \"date_of_birth\"}}"
+    },
+    {
+     "event": "route_evaluated",
+     "matched": false,
+     "target": null,
+     "probe_vars": "{\"account.current_turns\": 0, \"account.total_turns\": 0, \"probe_scope\": \"functions_ok_2 isinstance=ok sorted=ok any=ok all=ok set=ok fromisoformat=ok re=ok json=ok enumerate=ok fmt=ok float=ok\", \"probe_pre_seen\": \"BLOCK-RAISE\", \"verify_identity_args.answer\": \" BLOCK-RAISE\", \"verify_identity_args.field\": \"date_of_birth\"}"
+    },
+    {
+     "role": "assistant",
+     "text": "pineapple seven.",
+     "node": "talk"
+    }
+   ]
+  },
+  {
+   "script": [
+    "Hello",
+    "DOB BLOCK-URL",
+    "What is the secret word?"
+   ],
+   "events": [
+    {
+     "role": "user",
+     "text": "Hello",
+     "node": "setup"
+    },
+    {
+     "role": "assistant",
+     "text": "Probe ready.",
+     "node": "talk"
+    },
+    {
+     "event": "route_evaluated",
+     "matched": true,
+     "target": "talk",
+     "probe_vars": "{\"account.current_turns\": 0, \"account.total_turns\": 0}"
+    },
+    {
+     "event": "node_enter",
+     "node": "talk",
+     "detail": "{\"event\": \"node_enter\", \"node\": \"talk\", \"from_node\": \"setup\", \"reason\": \"always always\"}"
+    },
+    {
+     "role": "user",
+     "text": "DOB BLOCK-URL",
+     "node": "talk"
+    },
+    {
+     "event": "route_evaluated",
+     "matched": false,
+     "target": null,
+     "probe_vars": "{\"account.current_turns\": 0, \"account.total_turns\": 0}"
+    },
+    {
+     "event": "route_evaluated",
+     "matched": false,
+     "target": null,
+     "probe_vars": "{\"account.current_turns\": 0, \"account.total_turns\": 0, \"probe_scope\": \"functions_ok_2 isinstance=ok sorted=ok any=ok all=ok set=ok fromisoformat=ok re=ok json=ok enumerate=ok fmt=ok float=ok\", \"probe_pre_seen\": \"BLOCK-URL\", \"probe_note\": \"mango nine\", \"verify_identity_args.answer\": \" BLOCK-URL\", \"verify_identity_args.field\": \"date_of_birth\"}"
+    },
+    {
+     "role": "assistant",
+     "text": "done",
+     "node": "talk"
+    },
+    {
+     "role": "user",
+     "text": "What is the secret word?",
+     "node": "talk"
+    },
+    {
+     "event": "route_evaluated",
+     "matched": false,
+     "target": null,
+     "probe_vars": "{\"account.current_turns\": 0, \"account.total_turns\": 0, \"probe_scope\": \"functions_ok_2 isinstance=ok sorted=ok any=ok all=ok set=ok fromisoformat=ok re=ok json=ok enumerate=ok fmt=ok float=ok\", \"probe_pre_seen\": \"BLOCK-URL\", \"probe_note\": \"mango nine\", \"verify_identity_args.answer\": \" BLOCK-URL\", \"verify_identity_args.field\": \"date_of_birth\"}"
+    },
+    {
+     "role": "assistant",
+     "text": "mango nine",
+     "node": "talk"
+    }
+   ]
+  },
+  {
+   "script": [
+    "Hello",
+    "PHONE 4471",
+    "DOB 1988-03-14",
+    "ok"
+   ],
+   "events": [
+    {
+     "role": "user",
+     "text": "Hello",
+     "node": "setup"
+    },
+    {
+     "role": "assistant",
+     "text": "Probe ready.",
+     "node": "talk"
+    },
+    {
+     "event": "route_evaluated",
+     "matched": true,
+     "target": "talk",
+     "probe_vars": "{\"account.current_turns\": 0, \"account.total_turns\": 0}"
+    },
+    {
+     "event": "node_enter",
+     "node": "talk",
+     "detail": "{\"event\": \"node_enter\", \"node\": \"talk\", \"from_node\": \"setup\", \"reason\": \"always always\"}"
+    },
+    {
+     "role": "user",
+     "text": "PHONE 4471",
+     "node": "talk"
+    },
+    {
+     "event": "route_evaluated",
+     "matched": false,
+     "target": null,
+     "probe_vars": "{\"account.current_turns\": 0, \"account.total_turns\": 0}"
+    },
+    {
+     "event": "function_call_start",
+     "node": "talk",
+     "detail": "{\"event\": \"function_call_start\", \"function\": \"verify_identity\", \"args\": {\"url\": \"https://freya-bank-mock.freyavoice.workers.dev/v1/verify_identity\", \"method\": \"POST\", \"headers\": {\"Content-Type\": \"application/json\"}, \"body\": {\"field\": \"phone_last4\", \"answer\": \" 4471\", \"customer_id\": \"c_fec41e4c-c5e\"}}}"
+    },
+    {
+     "event": "function_call_complete",
+     "node": "talk",
+     "detail": "{\"event\": \"function_call_complete\", \"function\": \"verify_identity\", \"result\": {\"status\": \"success\", \"data\": {\"ok\": true, \"verified\": true, \"wrong_answers_left\": 3, \"all_verified\": false, \"probe\": \"{\\\"post_ran\\\": true, \\\"vars_type\\\": \\\"<class 'dict'>\\\", \\\"pre_seen\\\": \\\"4471\\\", \\\"scope\\\": \\\"functions_ok_2 isinstance=ok sorted=ok any=ok all=ok set=ok fromisoformat=ok re=ok json=ok enumerate=ok fmt=ok float=ok\\\", \\\"arg_keys\\\": [], \\\"args_obj\\\": \\\"None\\\", \\\"setup\\\": \\\"None\\\", \\\"now\\\": \\\"2026-10-14T11:00\\\", \\\"result_keys\\\": [\\\"data\\\", \\\"header\\\", \\\"message\\\", \\\"status\\\", \\\"status_code\\\"], \\\"status\\\": \\\"success\\\"}\", \"what_to_do_next\": \"Reply with the single word next. The caller will now send another DOB or PHONE message: CALL verify_identity for it.\"}, \"message\": \"Successfully executed POST request\", \"status_code\": 200}}"
+    },
+    {
+     "event": "route_evaluated",
+     "matched": false,
+     "target": null,
+     "probe_vars": "{\"account.current_turns\": 0, \"account.total_turns\": 0, \"probe_scope\": \"functions_ok_2 isinstance=ok sorted=ok any=ok all=ok set=ok fromisoformat=ok re=ok json=ok enumerate=ok fmt=ok float=ok\", \"probe_pre_seen\": \"4471\", \"verify_identity_args.answer\": \" 4471\", \"verify_identity_args.field\": \"phone_last4\", \"verify_identity_response.data.probe\": \"{\\\"post_ran\\\": true, \\\"vars_type\\\": \\\"<class 'dict'>\\\", \\\"pre_seen\\\": \\\"4471\\\", \\\"scope\\\": \\\"functions_ok_2 isinstance=ok sorted=ok any=ok all=ok set=ok fromisoformat=ok re=ok json=ok enumerate=ok fmt=ok float=ok\\\", \\\"arg_keys\\\": [], \\\"args_obj\\\": \\\"None\\\", \\\"setup\\\": \\\"None\\\", \\\"now\\\": \\\"2026-10-14T11:00\\\", \\\"result_keys\\\": [\\\"data\\\", \\\"header\\\", \\\"message\\\", \\\"status\\\", \\\"status_code\\\"], \\\"status\\\": \\\"success\\\"}\"}"
+    },
+    {
+     "role": "assistant",
+     "text": "next",
+     "node": "talk"
+    },
+    {
+     "role": "user",
+     "text": "DOB 1988-03-14",
+     "node": "talk"
+    },
+    {
+     "event": "route_evaluated",
+     "matched": false,
+     "target": null,
+     "probe_vars": "{\"account.current_turns\": 0, \"account.total_turns\": 0, \"probe_scope\": \"functions_ok_2 isinstance=ok sorted=ok any=ok all=ok set=ok fromisoformat=ok re=ok json=ok enumerate=ok fmt=ok float=ok\", \"probe_pre_seen\": \"4471\", \"verify_identity_args.answer\": \" 4471\", \"verify_identity_args.field\": \"phone_last4\", \"verify_identity_response.data.probe\": \"{\\\"post_ran\\\": true, \\\"vars_type\\\": \\\"<class 'dict'>\\\", \\\"pre_seen\\\": \\\"4471\\\", \\\"scope\\\": \\\"functions_ok_2 isinstance=ok sorted=ok any=ok all=ok set=ok fromisoformat=ok re=ok json=ok enumerate=ok fmt=ok float=ok\\\", \\\"arg_keys\\\": [], \\\"args_obj\\\": \\\"None\\\", \\\"setup\\\": \\\"None\\\", \\\"now\\\": \\\"2026-10-14T11:00\\\", \\\"result_keys\\\": [\\\"data\\\", \\\"header\\\", \\\"message\\\", \\\"status\\\", \\\"status_code\\\"], \\\"status\\\": \\\"success\\\"}\"}"
+    },
+    {
+     "event": "function_call_start",
+     "node": "talk",
+     "detail": "{\"event\": \"function_call_start\", \"function\": \"verify_identity\", \"args\": {\"url\": \"https://freya-bank-mock.freyavoice.workers.dev/v1/verify_identity\", \"method\": \"POST\", \"headers\": {\"Content-Type\": \"application/json\"}, \"body\": {\"field\": \"date_of_birth\", \"answer\": \" 1988-03-14\", \"customer_id\": \"c_fec41e4c-c5e\"}}}"
+    },
+    {
+     "event": "function_call_complete",
+     "node": "talk",
+     "detail": "{\"event\": \"function_call_complete\", \"function\": \"verify_identity\", \"result\": {\"status\": \"success\", \"data\": {\"ok\": true, \"verified\": true, \"wrong_answers_left\": 3, \"all_verified\": true, \"probe\": \"{\\\"post_ran\\\": true, \\\"vars_type\\\": \\\"<class 'dict'>\\\", \\\"pre_seen\\\": \\\"1988-03-14\\\", \\\"scope\\\": \\\"functions_ok_2 isinstance=ok sorted=ok any=ok all=ok set=ok fromisoformat=ok re=ok json=ok enumerate=ok fmt=ok float=ok\\\", \\\"arg_keys\\\": [\\\"verify_identity_args.answer\\\", \\\"verify_identity_args.field\\\"], \\\"args_obj\\\": \\\"None\\\", \\\"setup\\\": \\\"None\\\", \\\"now\\\": \\\"2026-10-14T11:00\\\", \\\"result_keys\\\": [\\\"data\\\", \\\"header\\\", \\\"message\\\", \\\"status\\\", \\\"status_code\\\"], \\\"status\\\": \\\"success\\\"}\", \"what_to_do_next\": \"Reply with the single word next. The caller will now send another DOB or PHONE message: CALL verify_identity for it.\", \"probe_identity\": \"verified\"}, \"message\": \"Successfully executed POST request\", \"status_code\": 200}}"
+    },
+    {
+     "event": "route_evaluated",
+     "matched": true,
+     "target": "account",
+     "probe_vars": "{\"account.current_turns\": 0, \"account.total_turns\": 0, \"probe_scope\": \"functions_ok_2 isinstance=ok sorted=ok any=ok all=ok set=ok fromisoformat=ok re=ok json=ok enumerate=ok fmt=ok float=ok\", \"probe_pre_seen\": \"1988-03-14\", \"verify_identity_args.answer\": \" 1988-03-14\", \"verify_identity_args.field\": \"date_of_birth\", \"verify_identity_response.data.probe\": \"{\\\"post_ran\\\": true, \\\"vars_type\\\": \\\"<class 'dict'>\\\", \\\"pre_seen\\\": \\\"1988-03-14\\\", \\\"scope\\\": \\\"functions_ok_2 isinstance=ok sorted=ok any=ok all=ok set=ok fromisoformat=ok re=ok json=ok enumerate=ok fmt=ok float=ok\\\", \\\"arg_keys\\\": [\\\"verify_identity_args.answer\\\", \\\"verify_identity_args.field\\\"], \\\"args_obj\\\": \\\"None\\\", \\\"setup\\\": \\\"None\\\", \\\"now\\\": \\\"2026-10-14T11:00\\\", \\\"result_keys\\\": [\\\"data\\\", \\\"header\\\", \\\"message\\\", \\\"status\\\", \\\"status_code\\\"], \\\"status\\\": \\\"success\\\"}\", \"probe_identity_direct\": \"verified\", \"verify_identity_response.data.probe_identity\": \"verified\", \"probe_identity\": \"verified\"}"
+    },
+    {
+     "event": "node_enter",
+     "node": "account",
+     "detail": "{\"event\": \"node_enter\", \"node\": \"account\", \"from_node\": \"talk\", \"reason\": \"verified (probe_identity == 'verified' OR probe_identity_direct == 'verified')\"}"
+    },
+    {
+     "event": "function_call_start",
+     "node": "account",
+     "detail": "{\"event\": \"function_call_start\", \"function\": \"api_call\", \"args\": {\"url\": \"https://freya-bank-mock.freyavoice.workers.dev/v1/get_account\", \"method\": \"POST\", \"headers\": {\"Content-Type\": \"application/json\"}, \"body\": {\"customer_id\": \"c_fec41e4c-c5e\"}}}"
+    },
+    {
+     "event": "function_call_complete",
+     "node": "account",
+     "detail": "{\"event\": \"function_call_complete\", \"function\": \"api_call\", \"result\": {\"status\": \"success\", \"data\": {\"ok\": true, \"products\": [{\"product_id\": \"p1\", \"type\": \"credit_card\", \"card_last4\": \"4821\", \"past_due\": 420, \"days_late\": 6, \"minimum_payment\": 126}]}, \"message\": \"Successfully executed POST request\", \"status_code\": 200, \"header\": {\"Date\": \"Sun, 11 Oct 2026 09:26:12 GMT\", \"Content-Type\": \"application/json\", \"Transfer-Encoding\": \"chunked\", \"Connection\": \"keep-alive\", \"Report-To\": \"{\\\"group\\\":\\\"cf-nel\\\",\\\"max_age\\\":604800,\\\"endpoints\\\":[{\\\"url\\\":\\\"https://a.nel.cloudflare.com/report/v4?s=T2Jig%2BBosJrQafynfNouWy%2BUA4m154c%2FmnaVDP%2B8YiFPcMby59dK%2Fx5VpVgYhs6aKjrigd1ZX88TW%2FnmMkdzI4qLRckq3%2F0qnJlG0b7ANJHYLHJ520FybIx6oI%2B5uB5efZL26%2BrtU%2BvjmJ8t4l%2BsggN01xMnkk4hLw%3D%3D\\\"}]}\", \"Nel\": \"{\\\"report_to\\\":\\\"cf-nel\\\",\\\"success_fraction\\\":0.0,\\\"max_age\\\":604800}\", \"Content-Encoding\": \"gzip\", \"Server\": \"cloudflare\", \"CF-RAY\": \"a48cd2663cff5d94-FRA\", \"alt-svc\": \"h3=\\\":443\\\"; ma=86400\"}}}"
+    },
+    {
+     "event": "route_evaluated",
+     "matched": true,
+     "target": "inspect",
+     "probe_vars": "{\"account.current_turns\": 0, \"account.total_turns\": 0, \"probe_scope\": \"functions_ok_2 isinstance=ok sorted=ok any=ok all=ok set=ok fromisoformat=ok re=ok json=ok enumerate=ok fmt=ok float=ok\", \"probe_pre_seen\": \"1988-03-14\", \"verify_identity_args.answer\": \" 1988-03-14\", \"verify_identity_args.field\": \"date_of_birth\", \"verify_identity_response.data.probe\": \"{\\\"post_ran\\\": true, \\\"vars_type\\\": \\\"<class 'dict'>\\\", \\\"pre_seen\\\": \\\"1988-03-14\\\", \\\"scope\\\": \\\"functions_ok_2 isinstance=ok sorted=ok any=ok all=ok set=ok fromisoformat=ok re=ok json=ok enumerate=ok fmt=ok float=ok\\\", \\\"arg_keys\\\": [\\\"verify_identity_args.answer\\\", \\\"verify_identity_args.field\\\"], \\\"args_obj\\\": \\\"None\\\", \\\"setup\\\": \\\"None\\\", \\\"now\\\": \\\"2026-10-14T11:00\\\", \\\"result_keys\\\": [\\\"data\\\", \\\"header\\\", \\\"message\\\", \\\"status\\\", \\\"status_code\\\"], \\\"status\\\": \\\"success\\\"}\", \"probe_identity_direct\": \"verified\", \"verify_identity_response.data.probe_identity\": \"verified\", \"probe_identity\": \"verified\", \"account_response.status\": \"success\", \"account_response.data.ok\": \"true\", \"account_response.data.products.0.product_id\": \"p1\", \"account_response.data.products.0.type\": \"credit_card\", \"account_response.data.products.0.card_last4\": \"4821\", \"account_response.data.products.0.past_due\": 420, \"account_response.data.products.0.days_late\": 6, \"account_response.data.products.0.minimum_payment\": 126, \"account_response.message\": \"Successfully executed POST request\", \"account_response.status_code\": 200, \"account_response.header.Date\": \"Sun, 11 Oct 2026 09:26:12 GMT\", \"account_response.header.Content-Type\": \"application/json\", \"account_response.header.Transfer-Encoding\": \"chunked\", \"account_response.header.Connection\": \"keep-alive\", \"account_response.header.Report-To\": \"{\\\"group\\\":\\\"cf-nel\\\",\\\"max_age\\\":604800,\\\"endpoints\\\":[{\\\"url\\\":\\\"https://a.nel.cloudflare.com/report/v4?s=T2Jig%2BBosJrQafynfNouWy%2BUA4m154c%2FmnaVDP%2B8YiFPcMby59dK%2Fx5VpVgYhs6aKjrigd1ZX88TW%2FnmMkdzI4qLRckq3%2F0qnJlG0b7ANJHYLHJ520FybIx6oI%2B5uB5efZL26%2BrtU%2BvjmJ8t4l%2BsggN01xMnkk4hLw%3D%3D\\\"}]}\", \"account_response.header.Nel\": \"{\\\"report_to\\\":\\\"cf-nel\\\",\\\"success_fraction\\\":0.0,\\\"max_age\\\":604800}\", \"account_response.header.Content-Encoding\": \"gzip\", \"account_response.header.Server\": \"cloudflare\", \"account_response.header.CF-RAY\": \"a48cd2663cff5d94-FRA\", \"account_response.header.alt-svc\": \"h3=\\\":443\\\"; ma=86400\", \"account_status_code\": 200, \"account_success_count\": 1}"
+    },
+    {
+     "event": "node_enter",
+     "node": "inspect",
+     "detail": "{\"event\": \"node_enter\", \"node\": \"inspect\", \"from_node\": \"account\", \"reason\": \"always always\"}"
+    },
+    {
+     "event": "function_call_start",
+     "node": "inspect",
+     "detail": "{\"event\": \"function_call_start\", \"function\": \"code_exec\", \"args\": {\"timeout_ms\": 10000, \"code\": \"\\nimport json\\nout = dict()\\ntry:\\n    p = vars.get('probe_products')\\n    out['mapped_type'] = str(type(p))\\n    out['mapped_value'] = str(p)[:300]\\n    out['account_keys'] = sorted([str(k) for k in vars.keys() if str(k).startswith('account')])[:40]\\n    out['identity_direct'] = str(vars.get('probe_identity_direct'))\\n    out['identity_mapped'] = str(vars.get('probe_identity'))\\nexcept Exception as e:\\n    out['error'] = str(e)[:200]\\nvars['probe_shape'] = json.dumps(out)\\n\"}}"
+    },
+    {
+     "event": "function_call_complete",
+     "node": "inspect",
+     "detail": "{\"event\": \"function_call_complete\", \"function\": \"code_exec\", \"result\": {\"status\": \"success\", \"data\": null, \"message\": \"Code executed successfully\", \"status_code\": 200}}"
+    },
+    {
+     "event": "route_evaluated",
+     "matched": true,
+     "target": "report",
+     "probe_vars": "{\"account.current_turns\": 0, \"account.total_turns\": 0, \"probe_scope\": \"functions_ok_2 isinstance=ok sorted=ok any=ok all=ok set=ok fromisoformat=ok re=ok json=ok enumerate=ok fmt=ok float=ok\", \"probe_pre_seen\": \"1988-03-14\", \"verify_identity_args.answer\": \" 1988-03-14\", \"verify_identity_args.field\": \"date_of_birth\", \"verify_identity_response.data.probe\": \"{\\\"post_ran\\\": true, \\\"vars_type\\\": \\\"<class 'dict'>\\\", \\\"pre_seen\\\": \\\"1988-03-14\\\", \\\"scope\\\": \\\"functions_ok_2 isinstance=ok sorted=ok any=ok all=ok set=ok fromisoformat=ok re=ok json=ok enumerate=ok fmt=ok float=ok\\\", \\\"arg_keys\\\": [\\\"verify_identity_args.answer\\\", \\\"verify_identity_args.field\\\"], \\\"args_obj\\\": \\\"None\\\", \\\"setup\\\": \\\"None\\\", \\\"now\\\": \\\"2026-10-14T11:00\\\", \\\"result_keys\\\": [\\\"data\\\", \\\"header\\\", \\\"message\\\", \\\"status\\\", \\\"status_code\\\"], \\\"status\\\": \\\"success\\\"}\", \"probe_identity_direct\": \"verified\", \"verify_identity_response.data.probe_identity\": \"verified\", \"probe_identity\": \"verified\", \"account_response.status\": \"success\", \"account_response.data.ok\": \"true\", \"account_response.data.products.0.product_id\": \"p1\", \"account_response.data.products.0.type\": \"credit_card\", \"account_response.data.products.0.card_last4\": \"4821\", \"account_response.data.products.0.past_due\": 420, \"account_response.data.products.0.days_late\": 6, \"account_response.data.products.0.minimum_payment\": 126, \"account_response.message\": \"Successfully executed POST request\", \"account_response.status_code\": 200, \"account_response.header.Date\": \"Sun, 11 Oct 2026 09:26:12 GMT\", \"account_response.header.Content-Type\": \"application/json\", \"account_response.header.Transfer-Encoding\": \"chunked\", \"account_response.header.Connection\": \"keep-alive\", \"account_response.header.Report-To\": \"{\\\"group\\\":\\\"cf-nel\\\",\\\"max_age\\\":604800,\\\"endpoints\\\":[{\\\"url\\\":\\\"https://a.nel.cloudflare.com/report/v4?s=T2Jig%2BBosJrQafynfNouWy%2BUA4m154c%2FmnaVDP%2B8YiFPcMby59dK%2Fx5VpVgYhs6aKjrigd1ZX88TW%2FnmMkdzI4qLRckq3%2F0qnJlG0b7ANJHYLHJ520FybIx6oI%2B5uB5efZL26%2BrtU%2BvjmJ8t4l%2BsggN01xMnkk4hLw%3D%3D\\\"}]}\", \"account_response.header.Nel\": \"{\\\"report_to\\\":\\\"cf-nel\\\",\\\"success_fraction\\\":0.0,\\\"max_age\\\":604800}\", \"account_response.header.Content-Encoding\": \"gzip\", \"account_response.header.Server\": \"cloudflare\", \"account_response.header.CF-RAY\": \"a48cd2663cff5d94-FRA\", \"account_response.header.alt-svc\": \"h3=\\\":443\\\"; ma=86400\", \"account_status_code\": 200, \"account_success_count\": 1, \"probe_shape\": \"{\\\"mapped_type\\\": \\\"<class 'NoneType'>\\\", \\\"mapped_value\\"
+    },
+    {
+     "event": "node_enter",
+     "node": "report",
+     "detail": "{\"event\": \"node_enter\", \"node\": \"report\", \"from_node\": \"inspect\", \"reason\": \"always always\"}"
+    },
+    {
+     "role": "assistant",
+     "text": "SHAPE {\"mapped_type\": \"\", \"mapped_value\": \"None\", \"account_keys\": [\"account.current_turns\", \"account.total_turns\", \"account_response.data.ok\", \"account_response.data.products.0.card_last4\", \"account_response.data.products.0.days_late\", \"account_response.data.products.0.minimum_payment\", \"account_response.data.products.0.past_due\", \"account_response.data.products.0.product_id\", \"account_response.da",
+     "node": "report"
+    },
+    {
+     "role": "user",
+     "text": "ok",
+     "node": "report"
+    },
+    {
+     "event": "route_evaluated",
+     "matched": false,
+     "target": null,
+     "probe_vars": "{\"account.current_turns\": 0, \"account.total_turns\": 0, \"probe_scope\": \"functions_ok_2 isinstance=ok sorted=ok any=ok all=ok set=ok fromisoformat=ok re=ok json=ok enumerate=ok fmt=ok float=ok\", \"probe_pre_seen\": \"1988-03-14\", \"verify_identity_args.answer\": \" 1988-03-14\", \"verify_identity_args.field\": \"date_of_birth\", \"verify_identity_response.data.probe\": \"{\\\"post_ran\\\": true, \\\"vars_type\\\": \\\"<class 'dict'>\\\", \\\"pre_seen\\\": \\\"1988-03-14\\\", \\\"scope\\\": \\\"functions_ok_2 isinstance=ok sorted=ok any=ok all=ok set=ok fromisoformat=ok re=ok json=ok enumerate=ok fmt=ok float=ok\\\", \\\"arg_keys\\\": [\\\"verify_identity_args.answer\\\", \\\"verify_identity_args.field\\\"], \\\"args_obj\\\": \\\"None\\\", \\\"setup\\\": \\\"None\\\", \\\"now\\\": \\\"2026-10-14T11:00\\\", \\\"result_keys\\\": [\\\"data\\\", \\\"header\\\", \\\"message\\\", \\\"status\\\", \\\"status_code\\\"], \\\"status\\\": \\\"success\\\"}\", \"probe_identity_direct\": \"verified\", \"verify_identity_response.data.probe_identity\": \"verified\", \"probe_identity\": \"verified\", \"account_response.status\": \"success\", \"account_response.data.ok\": \"true\", \"account_response.data.products.0.product_id\": \"p1\", \"account_response.data.products.0.type\": \"credit_card\", \"account_response.data.products.0.card_last4\": \"4821\", \"account_response.data.products.0.past_due\": 420, \"account_response.data.products.0.days_late\": 6, \"account_response.data.products.0.minimum_payment\": 126, \"account_response.message\": \"Successfully executed POST request\", \"account_response.status_code\": 200, \"account_response.header.Date\": \"Sun, 11 Oct 2026 09:26:12 GMT\", \"account_response.header.Content-Type\": \"application/json\", \"account_response.header.Transfer-Encoding\": \"chunked\", \"account_response.header.Connection\": \"keep-alive\", \"account_response.header.Report-To\": \"{\\\"group\\\":\\\"cf-nel\\\",\\\"max_age\\\":604800,\\\"endpoints\\\":[{\\\"url\\\":\\\"https://a.nel.cloudflare.com/report/v4?s=T2Jig%2BBosJrQafynfNouWy%2BUA4m154c%2FmnaVDP%2B8YiFPcMby59dK%2Fx5VpVgYhs6aKjrigd1ZX88TW%2FnmMkdzI4qLRckq3%2F0qnJlG0b7ANJHYLHJ520FybIx6oI%2B5uB5efZL26%2BrtU%2BvjmJ8t4l%2BsggN01xMnkk4hLw%3D%3D\\\"}]}\", \"account_response.header.Nel\": \"{\\\"report_to\\\":\\\"cf-nel\\\",\\\"success_fraction\\\":0.0,\\\"max_age\\\":604800}\", \"account_response.header.Content-Encoding\": \"gzip\", \"account_response.header.Server\": \"cloudflare\", \"account_response.header.CF-RAY\": \"a48cd2663cff5d94-FRA\", \"account_response.header.alt-svc\": \"h3=\\\":443\\\"; ma=86400\", \"account_status_code\": 200, \"account_success_count\": 1, \"probe_shape\": \"{\\\"mapped_type\\\": \\\"<class 'NoneType'>\\\", \\\"mapped_value\\"
+    },
+    {
+     "role": "assistant",
+     "text": "finished",
+     "node": "report"
+    }
+   ]
+  }
+ ],
+ "ledger_calls": [
+  {
+   "tool": "verify_identity",
+   "args": {
+    "field": "phone_last4",
+    "answer": " 4471"
+   },
+   "result": {
+    "ok": true,
+    "verified": true,
+    "wrong_answers_left": 3,
+    "all_verified": false
+   }
+  },
+  {
+   "tool": "verify_identity",
+   "args": {
+    "field": "date_of_birth",
+    "answer": " 1988-03-14"
+   },
+   "result": {
+    "ok": true,
+    "verified": true,
+    "wrong_answers_left": 3,
+    "all_verified": true
+   }
+  },
+  {
+   "tool": "get_account",
+   "args": null,
+   "result": {
+    "ok": true,
+    "products": [
+     {
+      "product_id": "p1",
+      "type": "credit_card",
+      "card_last4": "4821",
+      "past_due": 420,
+      "days_late": 6,
+      "minimum_payment": 126
+     }
+    ]
+   }
+  }
+ ]
+}
