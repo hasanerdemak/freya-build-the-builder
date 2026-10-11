@@ -1,0 +1,39 @@
+{
+ "issues": [
+  {
+   "severity": "minor",
+   "where": "task step 4, with the IF CUT DAY and IF PAST DUE items; cards_balance result_facts NO STATEMENT DEBT",
+   "problem": "Step 4 puts the date readings ahead of the facts. A card with no statement debt whose lastPayDate is before the call day gets the PAST DUE sentence (\"son ödeme tarihi ... geçmiştir\") instead of the no-debt reading, and then the offer through step 6. The NO STATEMENT DEBT fact meanwhile says to use the no-debt reading and make no offer, so the agent gets two contradicting instructions. On that path contact_email_get was never called (step 3 only calls it for HAS STATEMENT DEBT), so step 7 has no case to pick.",
+   "evidence": "2026-10-08 analysis 4.7: \"When `statementPaymentStatus` is NO_DEBT: 'Sonu [son 4 hane] ile biten [kart adı] kartınızın [hesap kesim tarihi] tarihli ekstresinden borcunuz bulunmamaktadır...'\"; 4.10: \"A minus figure ... is never read out as debt.\" Candidate step 4: \"First look at date_notes ... Otherwise use the case the facts name\".",
+   "fix": "Reorder step 4: NEW CARD and NO STATEMENT DEBT facts are checked first and always use their own reading. Only when the fact is HAS STATEMENT DEBT do the date_notes choose between CUT DAY, PAST DUE and the normal reading. Add to step 7: if contact_email_get has not succeeded yet, call it before making the offer."
+  },
+  {
+   "severity": "minor",
+   "where": "task step 11 (week options)",
+   "problem": "The fact naming the three weeks that may be offered arrives with the statement_week_get result. The options are spoken one turn later, after the caller answers \"değiştirmek ister misiniz?\", when the agent only has the list of results. Step 11 says \"the weeks the statement_week_get fact names\", which is no longer visible, so the small model may offer the current week or all four.",
+   "evidence": "Example 2: \"Only the other weeks (1st, 3rd and 4th) are offered as options.\" Skill: \"The agent does not keep a tool result beyond the turn it arrived in.\"",
+   "fix": "Rewrite step 11 to work from the list of results: \"take statementWeek of statement_week_get from the list of results; offer the three weeks of birinci, ikinci, üçüncü, dördüncü that are not that week; never name the current week as an option\"."
+  },
+  {
+   "severity": "minor",
+   "where": "task step 10, IF JOINT STATEMENT MAIN CARD / LINKED CARD",
+   "problem": "The joint-statement current-state sentence names the related card by product name only. The analysis requires each card's last four and name. The related card's last four is available as the ending of relatedCardNumber.",
+   "evidence": "2026-10-08 analysis section 7 step 2: \"Joint statement (`relationType` main or linked): read both cards here: each card's last four and name, the payment week, the next closing date and next due date.\"",
+   "fix": "In both joint-statement items, say the related card as \"sonu [the last four digits of relatedCardNumber, one by one] ile biten [relatedCardProductName] kartınız\". State that only these last four digits of relatedCardNumber are ever spoken."
+  },
+  {
+   "severity": "minor",
+   "where": "task HOW TO SPEAK, amounts",
+   "problem": "\"Dolar and Euro decimals as sent\" is meant as the Turkish word \"sent\" (cent) but reads in English as \"as transmitted\". The agent may then say foreign decimals as \"virgül yirmi\" or as kuruş instead of \"sent\".",
+   "evidence": "2026-10-08 analysis 4.9: \"Foreign currency decimals as cent (Dolar, Euro) and peni (İngiliz Sterlini): 7.666,50 USD → 'Yedi bin altı yüz altmış altı dolar elli sent'.\"",
+   "fix": "Write: \"Dolar and Euro decimals are spoken with the Turkish word “sent” after the number: “[tam kısım] dolar [ondalık] sent”, “[tam kısım] euro [ondalık] sent”; İngiliz Sterlini decimals with “peni”. Zero decimals are not said.\""
+  },
+  {
+   "severity": "minor",
+   "where": "task, IF the caller says they already changed the statement date this year",
+   "problem": "The item says the once-a-year sentence and \"do not start the change\", then stops. It names no next step and no ending, so the agent is left with no instruction and may still go on to the week flow or hang.",
+   "evidence": "2026-10-08 analysis section 7: \"A caller who has used the right this year is not offered the change; if they ask anyway, the same sentence is how we explain why it can't be done.\" Section 6 step 1 gives the pattern for an unavailable option: offer the other one if possible, \"otherwise main menu\". Skill: \"Every path of the `task` reaches an ending.\"",
+   "fix": "Extend the item: after the sentence, if there is E-MAIL ON FILE and no statement was sent in this call, say “Ekstrenizi kayıtlı mail adresinize gönderebilirim.” and wait. Otherwise say the closing sentence of ending `main_menu` and call its transition tool."
+  }
+ ]
+}
